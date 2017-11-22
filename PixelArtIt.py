@@ -60,7 +60,7 @@ ap.add_argument("-d", "--downscaling", required = False, nargs='?', default=0.25
 ap.add_argument("-st", "--steps", required = False, nargs='?', default=False, type = bool, help = "enable saving images for each step")
 ap.add_argument("-cf", "--colorFilter", required = False, choices = color_filters, default="HSV", help = "apply color mapping")
 args = vars(ap.parse_args())
-total_steps = 6
+total_steps = 5
 step = 0
 input_image_dir = ntpath.dirname(args["image"])
 input_image_file_name = ntpath.basename(args["image"])
@@ -113,5 +113,7 @@ printProgressBar(step, total_steps, prefix = 'Progress:', suffix = 'Complete', l
 if(applyColorFilter != 9):
     colored = cv2.applyColorMap(res, applyColorFilter)
     cv2.imwrite(output_image_dir+output_image_file_name+"output.jpg",colored)
+    step +=1
+    printProgressBar(step, total_steps, prefix = 'Progress:', suffix = 'Complete', length = 50)
 else:
     cv2.imwrite(output_image_dir+output_image_file_name+"output.jpg",res)
