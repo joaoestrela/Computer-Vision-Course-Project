@@ -31,12 +31,13 @@ def printProgressBar(iteration, total, prefix='', suffix='', decimals=1,
         print("Your " + input_image_file_name+' has been pixelated with success !!!')
 
 # construct the argument parser and parse the arguments
-ap = argparse.ArgumentParser()
+ap = argparse.ArgumentParser(add_help=False)
 ap.add_argument("-i", "--image", required = True, help = "Path to the image")
 ap.add_argument("-o", "--output", required = False, default="_", help = "Output to the image")
 ap.add_argument("-s", "--saturation", required = False, nargs='?', default=1.25, type = int, help = "% of saturation change")
 ap.add_argument("-c", "--clusters", required = False, nargs='?', default=8, type = int, help = "# of clusters")
 ap.add_argument("-d", "--downscaling", required = False, nargs='?', default=0.5, type = float, help = "% of downscaling")
+ap.add_argument("-st", "--steps", required = False, nargs='?', default=False, type = bool, help = "enable saving images for each step")
 args = vars(ap.parse_args())
 
 input_image_dir = ntpath.dirname(args["image"])
@@ -62,7 +63,7 @@ for i in range(0, height):
         else:
             saturated[i,j,1] = int(saturated[i,j,1] * args["saturation"])
 saturated = cv2.cvtColor(saturated, cv2.COLOR_HSV2RGB)
-cv2.imwrite(output_image_dir+output_image_file_name+"saturated.jpg", saturated)
+if(args["steps"]): cv2.imwrite(output_image_dir+output_image_file_name+"saturated.jpg", saturated)
 
 printProgressBar(3, 6, prefix = 'Progress:', suffix = 'Complete', length = 50)
 # QUANTITIZATION BY K-CLUSTEING - Making only the k most relevant colors appear
@@ -73,12 +74,12 @@ labels = clt.fit_predict(quant)
 quant = clt.cluster_centers_.astype("uint8")[labels]
 quant = quant.reshape((height, width, 3))
 quant = cv2.cvtColor(quant, cv2.COLOR_LAB2BGR)
-cv2.imwrite(output_image_dir+output_image_file_name+"quantized.jpg",quant)
+if(args["steps"]): cv2.imwrite(output_image_dir+output_image_file_name+"quantized.jpg",quant)
 
 printProgressBar(4, 6, prefix = 'Progress:', suffix = 'Complete', length = 50)
 # Nearest Neighbor Downscaling - Giving a pixelated look
 downscaled = cv2.resize(quant,(int(width*args["downscaling"]),int(height*args["downscaling"])), interpolation = cv2.INTER_NEAREST)
-cv2.imwrite(output_image_dir+output_image_file_name+"downscaled.jpg",downscaled)
+if(args["steps"]): cv2.imwrite(output_image_dir+output_image_file_name+"downscaled.jpg",downscaled)
 printProgressBar(5, 6, prefix = 'Progress:', suffix = 'Complete', length = 50)
 # Nearest Neighbor Upscaling - Returning to normal size while preserving the pixelated look
 res = cv2.resize(downscaled,(width,height), interpolation = cv2.INTER_NEAREST)
