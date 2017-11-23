@@ -107,7 +107,7 @@ step +=1
 printProgressBar(step, total_steps, prefix = 'Progress:', suffix = 'Complete', length = 50)
 # Nearest Neighbor Upscaling - Returning to normal size while preserving the pixelated look
 res = cv2.resize(downscaled,(width,height), interpolation = cv2.INTER_NEAREST)
-cv2.imwrite(output_image_dir+output_image_file_name+"rescaled.jpg",res)
+if(args["steps"]): cv2.imwrite(output_image_dir+output_image_file_name+"rescaled.jpg",res)
 step +=1
 printProgressBar(step, total_steps, prefix = 'Progress:', suffix = 'Complete', length = 50)
 if(applyColorFilter != 9):
