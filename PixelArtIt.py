@@ -76,7 +76,6 @@ img = cv2.imread(args["image"],-1)
 step +=1
 printProgressBar(step, total_steps, prefix = 'Progress:', suffix = 'Complete', length = 50)
 height, width, channels = img.shape
-print(channels)
 # SATURATION - Giving the image a more vivid look for easier quantitization
 saturated = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
 for i in range(0, height):
@@ -109,7 +108,6 @@ if(args["steps"]): cv2.imwrite(output_image_dir+output_image_file_name+"quantize
 step +=1
 printProgressBar(step, total_steps, prefix = 'Progress:', suffix = 'Complete', length = 50)
 # Nearest Neighbor Downscaling - Giving a pixelated look
-print(quant.shape[2])
 downscaled = cv2.resize(quant,(int(width*args["downscaling"]),int(height*args["downscaling"])), interpolation = cv2.INTER_NEAREST)
 if(args["steps"]): cv2.imwrite(output_image_dir+output_image_file_name+"downscaled."+imageFormat,downscaled)
 step +=1
