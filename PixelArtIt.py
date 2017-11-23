@@ -67,14 +67,16 @@ input_image_file_name = ntpath.basename(args["image"])
 output_image_dir = ntpath.dirname(args["output"])
 output_image_file_name = ntpath.basename(args["output"])
 if(output_image_file_name == "_"): output_image_file_name = input_image_file_name.split(".")[0]+"_"
+imageFormat = input_image_file_name.split(".")[1]
 applyColorFilter = color_filter_to_color_map(args["colorFilter"])
 if(applyColorFilter != 9): total_steps +=1
 print("You are using PixelArtIt 1.0 by Joao Estrela @ DCC.FC.UP.PT")
 print("Your " + input_image_file_name+' is going to be pixelated !!!')
-img = cv2.imread(args["image"])
+img = cv2.imread(args["image"],-1)
 step +=1
 printProgressBar(step, total_steps, prefix = 'Progress:', suffix = 'Complete', length = 50)
 height, width, channels = img.shape
+print(channels)
 # SATURATION - Giving the image a more vivid look for easier quantitization
 saturated = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
 for i in range(0, height):
@@ -86,7 +88,7 @@ for i in range(0, height):
         else:
             saturated[i,j,1] = int(saturated[i,j,1] * args["saturation"])
 saturated = cv2.cvtColor(saturated, cv2.COLOR_HSV2RGB)
-if(args["steps"]): cv2.imwrite(output_image_dir+output_image_file_name+"saturated.jpg", saturated)
+if(args["steps"]): cv2.imwrite(output_image_dir+output_image_file_name+"saturated."+imageFormat, saturated)
 step +=1
 printProgressBar(step, total_steps, prefix = 'Progress:', suffix = 'Complete', length = 50)
 # QUANTITIZATION BY K-CLUSTEING - Making only the k most relevant colors appear
@@ -97,23 +99,30 @@ labels = clt.fit_predict(quant)
 quant = clt.cluster_centers_.astype("uint8")[labels]
 quant = quant.reshape((height, width, 3))
 quant = cv2.cvtColor(quant, cv2.COLOR_LAB2BGR)
-if(args["steps"]): cv2.imwrite(output_image_dir+output_image_file_name+"quantized.jpg",quant)
+if(imageFormat =="png"):
+    b = quant[:,:,0]
+    g = quant[:,:,1]
+    r = quant[:,:,2]
+    a = img[:,:,3]
+    quant = cv2.merge((b,g,r,a))
+if(args["steps"]): cv2.imwrite(output_image_dir+output_image_file_name+"quantized."+imageFormat,quant)
 step +=1
 printProgressBar(step, total_steps, prefix = 'Progress:', suffix = 'Complete', length = 50)
 # Nearest Neighbor Downscaling - Giving a pixelated look
+print(quant.shape[2])
 downscaled = cv2.resize(quant,(int(width*args["downscaling"]),int(height*args["downscaling"])), interpolation = cv2.INTER_NEAREST)
-if(args["steps"]): cv2.imwrite(output_image_dir+output_image_file_name+"downscaled.jpg",downscaled)
+if(args["steps"]): cv2.imwrite(output_image_dir+output_image_file_name+"downscaled."+imageFormat,downscaled)
 step +=1
 printProgressBar(step, total_steps, prefix = 'Progress:', suffix = 'Complete', length = 50)
 # Nearest Neighbor Upscaling - Returning to normal size while preserving the pixelated look
 res = cv2.resize(downscaled,(width,height), interpolation = cv2.INTER_NEAREST)
-if(args["steps"]): cv2.imwrite(output_image_dir+output_image_file_name+"rescaled.jpg",res)
+if(args["steps"]): cv2.imwrite(output_image_dir+output_image_file_name+"rescaled."+imageFormat,res)
 step +=1
 printProgressBar(step, total_steps, prefix = 'Progress:', suffix = 'Complete', length = 50)
 if(applyColorFilter != 9):
     colored = cv2.applyColorMap(res, applyColorFilter)
-    cv2.imwrite(output_image_dir+output_image_file_name+"output.jpg",colored)
+    cv2.imwrite(output_image_dir+output_image_file_name+"output."+imageFormat,colored)
     step +=1
     printProgressBar(step, total_steps, prefix = 'Progress:', suffix = 'Complete', length = 50)
 else:
-    cv2.imwrite(output_image_dir+output_image_file_name+"output.jpg",res)
+    cv2.imwrite(output_image_dir+output_image_file_name+"output."+imageFormat,res)
