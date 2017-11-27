@@ -98,6 +98,10 @@ PixelArtIt has 12 color maps provided by openCV library but has also an option t
 Custom Color Map Example: ![Custom Color Map Example](./custom_colormap_example.png)
 
 ## Resullts
+Original:
+
+![saturation example](./lenna.png)
+
 Saturation:
 
 ![saturation example](./lennaResults/lenna_saturated.png)
