@@ -113,7 +113,7 @@ if(channels == 4):
     r = quant[:,:,2]
     a = img[:,:,3]
     quant = cv2.merge((b,g,r,a))
-if(args["steps"]): cv2.imwrite(output_image_dir+output_image_file_name+"quantized."+imageFormat,quant)
+if(args["steps"]): cv2.imwrite(output_image_dir+output_image_file_name+"quantitized."+imageFormat,quant)
 step +=1
 printProgressBar(step, total_steps, prefix = 'Progress:', suffix = 'Complete', length = 50)
 # Nearest Neighbor Downscaling - Giving a pixelated look

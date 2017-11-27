@@ -1,17 +1,20 @@
 # What is PixelArtIt?
 PixelArtIt is a python script that uses a input image to make a new pixel art image !
 
+This script was made for the course of Computer Vision @ DCC.FCUP by João Estrela (up201207860)
+
 ## Table of contents
-1. [Running it](#Running_it)
-    1. [Requirements](#Requirements)
-    2. [Parameters](#Parameters)
-    2. [Simple File Exe compilation comand - Windows](#Simple_File_Exe_compilation_comand_-_Windows)
-2. [Tecnical Explanation](#Tecnical_Explanation)
-    1. [What is pixel art?](#What_is_pixel_art?)
-    2. [Saturation](#Saturation)
-    3. [Color Clustering](#Color_Clustering)
-    4. [Downscaling and Upscaling](#Downscaling_and_Upscaling)
-    5. [Color Filtering](#Color_Filtering)
+1. [Running it](#running-it)
+    1. [Requirements](#requirements)
+    2. [Parameters](#parameters)
+    2. [Simple File Exe compilation comand - Windows 10](#simple-file-exe-compilation-comand---windows-10)
+2. [Tecnical Explanation](#tecnical-explanation)
+    1. [What is pixel art?](#what-is-pixel-art?)
+    2. [Saturation](#saturation)
+    3. [Color Clustering](#color-clustering)
+    4. [Downscaling and Upscaling](#downscaling-and-upscaling)
+    5. [Color Filtering](#color-filtering)
+3. [Results](#results)
 
 ## Running it
 ### Requirements
@@ -45,7 +48,7 @@ Making Lenna a Pixer Art artwork with a litte of pink!
 python PixelArtIt.py -cf PINK -i lenna.png
 ```
 
-### Simple File Exe compilation comand - Windows
+### Simple File Exe compilation comand - Windows 10
 ```
 pyinstaller --onefile --icon "PixelArtItIcon.ico" --paths "C:\Program Files (x86)\Python36-32\Lib\site-packages\scipy\extra-dll" "C:/Program Files (x86)/Windows Kits/10/Redist/ucrt/DLLs/x86"--additional-hooks-dir=. PixelArtIt.py
 ```
@@ -93,3 +96,24 @@ To achive similar effects PixelArtIt uses 256 color maps and maps the colors pre
 PixelArtIt has 12 color maps provided by openCV library but has also an option to use a custom one. The custom color map must be a 256x1 image named custom_colormap.png.
 
 Custom Color Map Example: ![Custom Color Map Example](./custom_colormap_example.png)
+
+## Resullts
+Saturation:
+
+![saturation example](./lennaResults/lenna_saturated.png)
+
+Quantized:
+
+![quantitization example](./lennaResults/lenna_quantitized.png)
+
+Downscaled:
+
+![downscale example](./lennaResults/lenna_downscaled.png)
+
+Rescaled:
+
+![rescaled example](./lennaResults/lenna_rescaled.png)
+
+Color Mapped (JET):
+
+![color mapping example](./lennaResults/lenna_output.png)
