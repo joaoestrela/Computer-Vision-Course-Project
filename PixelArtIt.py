@@ -45,10 +45,11 @@ def color_filter_to_color_map(color_filter_string):
         "COOL" : cv2.COLORMAP_COOL,
         "HSV" : cv2.COLORMAP_HSV,
         "PINK" : cv2.COLORMAP_PINK,
-        "HOT" : cv2.COLORMAP_HOT
+        "HOT" : cv2.COLORMAP_HOT,
+        "CUSTOM" : 99
     }.get(color_filter_string,None)
 
-color_filters =["AUTUMN","BONE","JET","WINTER","RAINBOW","OCEAN","SUMMER","SPRING","COOL","HSV","PINK","HOT"]
+color_filters =["AUTUMN","BONE","JET","WINTER","RAINBOW","OCEAN","SUMMER","SPRING","COOL","HSV","PINK","HOT","CUSTOM"]
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser(add_help=False)
@@ -58,7 +59,7 @@ ap.add_argument("-s", "--saturation", required = False, nargs='?', default=1.25,
 ap.add_argument("-c", "--clusters", required = False, nargs='?', default=8, type = int, help = "# of clusters")
 ap.add_argument("-d", "--downscaling", required = False, nargs='?', default=0.25, type = float, help = "% of downscaling")
 ap.add_argument("-st", "--steps", required = False, nargs='?', default=False, type = bool, help = "enable saving images for each step")
-ap.add_argument("-cf", "--colorFilter", required = False, choices = color_filters, default="HSV", help = "apply color mapping")
+ap.add_argument("-cf", "--colorFilter", required = False, choices = color_filters, default=-1, help = "apply color mapping")
 args = vars(ap.parse_args())
 total_steps = 5
 step = 0
@@ -69,8 +70,17 @@ output_image_file_name = ntpath.basename(args["output"])
 if(output_image_file_name == "_"): output_image_file_name = input_image_file_name.split(".")[0]+"_"
 imageFormat = input_image_file_name.split(".")[1]
 applyColorFilter = color_filter_to_color_map(args["colorFilter"])
-if(applyColorFilter != 9): total_steps +=1
+if(applyColorFilter != None): total_steps +=1
 print("You are using PixelArtIt 1.0 by Joao Estrela @ DCC.FC.UP.PT")
+if(applyColorFilter == 99):
+    custom_color_map = cv2.imread("custom_colormap.png")
+    if(custom_color_map.size != 0):
+        if(np.size(custom_color_map, 0) != 1 and np.size(custom_color_map, 1) != 256):
+            print("Invalid Custom Colormap - Not 256x1 image.\nNot applying a color filter!")
+            applyColorFilter = 9
+    else:
+        print("No custom_colormap.png found!\nNot applying a color filter!");
+        applyColorFilter = 9
 print("Your " + input_image_file_name+' is going to be pixelated !!!')
 img = cv2.imread(args["image"],-1)
 step +=1
@@ -98,7 +108,7 @@ labels = clt.fit_predict(quant)
 quant = clt.cluster_centers_.astype("uint8")[labels]
 quant = quant.reshape((height, width, 3))
 quant = cv2.cvtColor(quant, cv2.COLOR_LAB2BGR)
-if(imageFormat =="png"):
+if(channels == 4):
     b = quant[:,:,0]
     g = quant[:,:,1]
     r = quant[:,:,2]
@@ -116,11 +126,13 @@ printProgressBar(step, total_steps, prefix = 'Progress:', suffix = 'Complete', l
 res = cv2.resize(downscaled,(width,height), interpolation = cv2.INTER_NEAREST)
 if(args["steps"]): cv2.imwrite(output_image_dir+output_image_file_name+"rescaled."+imageFormat,res)
 step +=1
-printProgressBar(step, total_steps, prefix = 'Progress:', suffix = 'Complete', length = 50)
-if(applyColorFilter != 9):
-    colored = cv2.applyColorMap(res, applyColorFilter)
+if(applyColorFilter != None):
+    if(applyColorFilter == 99):
+        colored = cv2.LUT(res,custom_color_map)
+    else:
+        colored = cv2.applyColorMap(res, applyColorFilter)
     cv2.imwrite(output_image_dir+output_image_file_name+"output."+imageFormat,colored)
     step +=1
-    printProgressBar(step, total_steps, prefix = 'Progress:', suffix = 'Complete', length = 50)
 else:
     cv2.imwrite(output_image_dir+output_image_file_name+"output."+imageFormat,res)
+printProgressBar(step, total_steps, prefix = 'Progress:', suffix = 'Complete', length = 50)
