@@ -4,7 +4,6 @@ import numpy as np
 from sklearn.cluster import MiniBatchKMeans
 import argparse
 import ntpath
-from enum import Enum
 
 # Print iterations progress
 def printProgressBar(iteration, total, prefix='', suffix='', decimals=1,
@@ -100,7 +99,7 @@ saturated = cv2.cvtColor(saturated, cv2.COLOR_HSV2RGB)
 if(args["steps"]): cv2.imwrite(output_image_dir+output_image_file_name+"saturated."+imageFormat, saturated)
 step +=1
 printProgressBar(step, total_steps, prefix = 'Progress:', suffix = 'Complete', length = 50)
-# QUANTITIZATION BY K-CLUSTEING - Making only the k most relevant colors appear
+# QUANTITIZATION BY K-CLUSTERING - Making only the k most relevant colors appear
 quant = cv2.cvtColor(saturated, cv2.COLOR_BGR2LAB)
 quant = quant.reshape((quant.shape[0] * quant.shape[1], 3))
 clt = MiniBatchKMeans(args["clusters"])

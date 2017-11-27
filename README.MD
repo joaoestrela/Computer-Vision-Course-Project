@@ -1,13 +1,95 @@
-### What is PixelArtIt?
+# What is PixelArtIt?
 PixelArtIt is a python script that uses a input image to make a new pixel art image !
 
-### Paraments
-    i             image       - Required  : input image path
-    o             output      - Optional  : output image path
-    s             saturation  - Optional  : increase in saturation
-    c             clusters    - Optional  : number of color clusters/max number of colors in output
-    d             downscaling - Optional  : downscaling scale for pixelated effect
-    st            steps       - Optional  : enable saving images for each step
+## Table of contents
+1. [Running it](#Running_it)
+    1. [Requirements](#Requirements)
+    2. [Parameters](#Parameters)
+    2. [Simple File Exe compilation comand - Windows](#Simple_File_Exe_compilation_comand_-_Windows)
+2. [Tecnical Explanation](#Tecnical_Explanation)
+    1. [What is pixel art?](#What_is_pixel_art?)
+    2. [Saturation](#Saturation)
+    3. [Color Clustering](#Color_Clustering)
+    4. [Downscaling and Upscaling](#Downscaling_and_Upscaling)
+    5. [Color Filtering](#Color_Filtering)
 
-### Simple File Exe compilation comand
+## Running it
+### Requirements
+* Python 2.7 or above
+* Python Libraries:
+    - cv2
+    - numpy
+    - sklearn
+    - argparse
+    - ntpath
+
+### Parameters
+
+| Parameter | Parameter Full Name | Required | Description                                             |
+|-----------|---------------------|----------|---------------------------------------------------------|
+| i         | image               | yes      | input image path                                        |
+| o         | output              | no       | output image path                                       |
+| s         | saturation          | no       | increase in saturation                                  |
+| c         | clusters            | no       | number of color clusters/max number of colors in output |
+| d         | downscaling         | no       | downscaling scale for pixelated effect                  |
+| cf        | colorFilter         | no       | apply color mapping                                     |
+| st        | steps               | no       | enable saving images for each step                      |
+
+### Running comands
+Making Lenna a Pixer Art artwork !
+```
+python PixelArtIt.py -i lenna.png
+```
+Making Lenna a Pixer Art artwork with a litte of pink!
+```
+python PixelArtIt.py -cf PINK -i lenna.png
+```
+
+### Simple File Exe compilation comand - Windows
+```
 pyinstaller --onefile --icon "PixelArtItIcon.ico" --paths "C:\Program Files (x86)\Python36-32\Lib\site-packages\scipy\extra-dll" "C:/Program Files (x86)/Windows Kits/10/Redist/ucrt/DLLs/x86"--additional-hooks-dir=. PixelArtIt.py
+```
+
+## Tecnical Explanation
+
+### What is pixel art?
+
+Pixel art is a form of digital art, created through the use of software, where images are edited on the pixel level.
+The majority of graphics for 8-bit and 16-bit computers and video game consoles, as well as other limited systems like graphing calculators, is pixel art. - [Wikipedia](https://en.wikipedia.org/wiki/Pixel_art)
+
+### Saturation
+
+In pixel art vivid colors are a must ! In a time where only a few colors could survive the most vivid ones where the most used to capture the attention of the visualizer!
+
+By converting the color space to HSV PixelArtIt is able to change the S value (Saturation) for every pixel in a way that affects every color in RGB space in the same way.
+
+In PixelArtIt the default value for changing saturation is 25%.
+
+### Color Clustering
+
+In the old days, computers could only use use 3 bits for each color. That means that only 8 (2^3) colors could be present in a image.
+
+PixelArtIt uses K-Clustering to get the K most relevant colors in the image and produce a new image with only those K clusters present.
+
+The default value for K is 8.
+
+### Downscaling and Upscaling
+
+Back in the day, space and memory were short and images sufered because their resolutions had to be small, some times as short as 8x8, 16x16, or 32x32 a bit later.
+
+To make images small as those sizes, there is a bit of downscaling to be done, but to get the pixelated look right it can't be any kind of interpolation. The best one for this effect is Nearest Neighbor because it tries to mantain the most important details without adding assumptions.
+
+Well it is 2017 and we don't really need our images to be that small and to get back our image to the original size we upscale using Nearest Neighbor so it maintains it's pixelated look.
+
+The default value for Downscaling is 0.25 but is advised to use lower values in some cases.
+
+### Color Filtering
+
+In a world where there only can be represented 8 or 16 colors there was the need to display more! And so palettes were created !
+These paletters were used to map the original 8 or 16 colors to 8 or 16 new colors.
+
+To achive similar effects PixelArtIt uses 256 color maps and maps the colors present in the already pixelated image to new ones.
+
+PixelArtIt has 12 color maps provided by openCV library but has also an option to use a custom one. The custom color map must be a 256x1 image named custom_colormap.png.
+
+Custom Color Map Example: ![Custom Color Map Example](./custom_colormap_example.png)
