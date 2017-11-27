@@ -9,7 +9,7 @@ This script was made for the course of Computer Vision @ DCC.FCUP by João Estre
     2. [Parameters](#parameters)
     2. [Simple File Exe compilation comand - Windows 10](#simple-file-exe-compilation-comand---windows-10)
 2. [Tecnical Explanation](#tecnical-explanation)
-    1. [What is pixel art?](#what-is-pixel-art?)
+    1. [What is pixel art?](#what-is-pixel-art)
     2. [Saturation](#saturation)
     3. [Color Clustering](#color-clustering)
     4. [Downscaling and Upscaling](#downscaling-and-upscaling)
