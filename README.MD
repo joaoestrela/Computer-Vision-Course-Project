@@ -172,6 +172,8 @@ Color Mapped (JET):
 ![color mapping example](./lennaResults/lenna_output.png)
 
 
-#Combined Result
+# Combined Result
+
+The result shown here is using all default values. With a bit of tweaking could be better !
 
 ![combined result](./object1_test_output.png)
