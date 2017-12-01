@@ -1,7 +1,7 @@
 # The very best indie game developer tools to get graphics
 
 ## Table of contents
-1. GetMeThoseObjects
+1. [GetMeThoseObjects](#what-is-getmethoseobjects)
     1. [Running it](#running-it)
         1. [Requirements](#requirements)
         2. [Parameters](#parameters)
@@ -9,20 +9,22 @@
     3. [Results](#results)
 2. [PixelArtIt](#what-is-pixelartit)
     1. [What is pixel art?](#what-is-pixel-art)
-    2. [Running it](#running-it)
-        1. [Requirements](#requirements)
-        2. [Parameters](#parameters)
+    2. [Running it](#running-it-1)
+        1. [Requirements](#requirements-1)
+        2. [Parameters](#parameters-1)
         3. [Simple File Exe compilation comand - Windows 10](#simple-file-exe-compilation-comand---windows-10)
-    3. [Tecnical Explanation](#tecnical-explanation)
+    3. [Tecnical Explanation](#tecnical-explanation-1)
         1. [Saturation](#saturation)
         2. [Color Clustering](#color-clustering)
         3. [Downscaling and Upscaling](#downscaling-and-upscaling)
         4. [Color Filtering](#color-filtering)
-    4. [Results](#results)
+    4. [Results](#results-1)
 
 # GetMeThoseObjects
 
 ## What is GetMeThoseObjects?
+GetMeThoseObjects is a python script that tries to split an image into multiple images one per each object !
+This script was made for the course of Computer Vision @ DCC.FCUP by João Estrela (up201207860)
 
 ## Running it
 ### Requirements
@@ -39,6 +41,21 @@
 |-----------|---------------------|----------|---------------------------------------------------------|
 | i         | image               | yes      | input image path                                        |
 | o         | output              | no       | output folder for objects images                        |
+
+## Tecnical Explanation
+
+## Results
+
+Original:
+
+![original example](./test.png)
+
+Objects:
+
+![object 1 example](./resultObjects/object1_test.png)
+
+
+![object 2 example](./resultObjects/object2_test.png)
 
 # PixelArtIt
 
@@ -131,7 +148,7 @@ Custom Color Map Example: ![Custom Color Map Example](./custom_colormap_example.
 ## Resullts     
 Original:
 
-![saturation example](./lenna.png)
+![original example](./lenna.png)
 
 Saturation:
 
