@@ -19,6 +19,7 @@
         3. [Downscaling and Upscaling](#downscaling-and-upscaling)
         4. [Color Filtering](#color-filtering)
     4. [Results](#results-1)
+3. [Combined Result](#combined-result)
 
 # GetMeThoseObjects
 
@@ -169,3 +170,8 @@ Rescaled:
 Color Mapped (JET):
 
 ![color mapping example](./lennaResults/lenna_output.png)
+
+
+#Combined Result
+
+![combined result](./object1_test_output.png)
