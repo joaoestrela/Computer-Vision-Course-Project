@@ -20,7 +20,29 @@
         4. [Color Filtering](#color-filtering)
     4. [Results](#results)
 
-# What is PixelArtIt?
+# GetMeThoseObjects
+
+## What is GetMeThoseObjects?
+
+## Running it
+### Requirements
+* Python 2.7 or above
+* Python Libraries:
+    - cv2
+    - numpy
+    - argparse
+    - ntpath
+
+### Parameters
+
+| Parameter | Parameter Full Name | Required | Description                                             |
+|-----------|---------------------|----------|---------------------------------------------------------|
+| i         | image               | yes      | input image path                                        |
+| o         | output              | no       | output folder for objects images                        |
+
+# PixelArtIt
+
+## What is PixelArtIt?
 PixelArtIt is a python script that uses a input image to make a new pixel art image !
 This script was made for the course of Computer Vision @ DCC.FCUP by João Estrela (up201207860)
 
