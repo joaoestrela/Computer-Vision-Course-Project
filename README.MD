@@ -1,20 +1,33 @@
-# What is PixelArtIt?
-PixelArtIt is a python script that uses a input image to make a new pixel art image !
-
-This script was made for the course of Computer Vision @ DCC.FCUP by João Estrela (up201207860)
+# The very best indie game developer tools to get graphics
 
 ## Table of contents
-1. [Running it](#running-it)
-    1. [Requirements](#requirements)
-    2. [Parameters](#parameters)
-    2. [Simple File Exe compilation comand - Windows 10](#simple-file-exe-compilation-comand---windows-10)
-2. [Tecnical Explanation](#tecnical-explanation)
+1. GetMeThoseObjects
+    1. [Running it](#running-it)
+        1. [Requirements](#requirements)
+        2. [Parameters](#parameters)
+    2. [Tecnical Explanation](#tecnical-explanation)
+    3. [Results](#results)
+2. [PixelArtIt](#what-is-pixelartit)
     1. [What is pixel art?](#what-is-pixel-art)
-    2. [Saturation](#saturation)
-    3. [Color Clustering](#color-clustering)
-    4. [Downscaling and Upscaling](#downscaling-and-upscaling)
-    5. [Color Filtering](#color-filtering)
-3. [Results](#results)
+    2. [Running it](#running-it)
+        1. [Requirements](#requirements)
+        2. [Parameters](#parameters)
+        3. [Simple File Exe compilation comand - Windows 10](#simple-file-exe-compilation-comand---windows-10)
+    3. [Tecnical Explanation](#tecnical-explanation)
+        1. [Saturation](#saturation)
+        2. [Color Clustering](#color-clustering)
+        3. [Downscaling and Upscaling](#downscaling-and-upscaling)
+        4. [Color Filtering](#color-filtering)
+    4. [Results](#results)
+
+# What is PixelArtIt?
+PixelArtIt is a python script that uses a input image to make a new pixel art image !
+This script was made for the course of Computer Vision @ DCC.FCUP by João Estrela (up201207860)
+
+## What is pixel art?
+
+Pixel art is a form of digital art, created through the use of software, where images are edited on the pixel level.
+The majority of graphics for 8-bit and 16-bit computers and video game consoles, as well as other limited systems like graphing calculators, is pixel art. - [Wikipedia](https://en.wikipedia.org/wiki/Pixel_art)
 
 ## Running it
 ### Requirements
@@ -37,6 +50,7 @@ This script was made for the course of Computer Vision @ DCC.FCUP by João Estre
 | d         | downscaling         | no       | downscaling scale for pixelated effect                  |
 | cf        | colorFilter         | no       | apply color mapping                                     |
 | st        | steps               | no       | enable saving images for each step                      |
+| r         | resize              | no       | resize the result to a specific size                    |
 
 ### Running comands
 Making Lenna a Pixer Art artwork !
@@ -54,11 +68,6 @@ pyinstaller --onefile --icon "PixelArtItIcon.ico" --paths "C:\Program Files (x86
 ```
 
 ## Tecnical Explanation
-
-### What is pixel art?
-
-Pixel art is a form of digital art, created through the use of software, where images are edited on the pixel level.
-The majority of graphics for 8-bit and 16-bit computers and video game consoles, as well as other limited systems like graphing calculators, is pixel art. - [Wikipedia](https://en.wikipedia.org/wiki/Pixel_art)
 
 ### Saturation
 
@@ -97,7 +106,7 @@ PixelArtIt has 12 color maps provided by openCV library but has also an option t
 
 Custom Color Map Example: ![Custom Color Map Example](./custom_colormap_example.png)
 
-## Resullts
+## Resullts     
 Original:
 
 ![saturation example](./lenna.png)
