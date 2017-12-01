@@ -59,6 +59,7 @@ ap.add_argument("-c", "--clusters", required = False, nargs='?', default=8, type
 ap.add_argument("-d", "--downscaling", required = False, nargs='?', default=0.25, type = float, help = "% of downscaling")
 ap.add_argument("-st", "--steps", required = False, nargs='?', default=False, type = bool, help = "enable saving images for each step")
 ap.add_argument("-cf", "--colorFilter", required = False, choices = color_filters, default=-1, help = "apply color mapping")
+ap.add_argument("-r", "--resize", required = False, type = int, nargs=2, help = "resize final result to width x height")
 args = vars(ap.parse_args())
 total_steps = 5
 step = 0
@@ -122,6 +123,9 @@ if(args["steps"]): cv2.imwrite(output_image_dir+output_image_file_name+"downscal
 step +=1
 printProgressBar(step, total_steps, prefix = 'Progress:', suffix = 'Complete', length = 50)
 # Nearest Neighbor Upscaling - Returning to normal size while preserving the pixelated look
+if(args["resize"]):
+    width = args["resize"][0]
+    height = args["resize"][1]
 res = cv2.resize(downscaled,(width,height), interpolation = cv2.INTER_NEAREST)
 if(args["steps"]): cv2.imwrite(output_image_dir+output_image_file_name+"rescaled."+imageFormat,res)
 step +=1
