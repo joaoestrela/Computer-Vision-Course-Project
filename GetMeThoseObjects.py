@@ -65,7 +65,7 @@ step +=1
 printProgressBar(step, total_steps, prefix = 'Progress:', suffix = 'Complete', length = 50)
 
 # Using some morphological transformations to get a cleaner mask with less noise
-kernel = np.ones((2,2),np.uint8)
+kernel = np.ones((1,1),np.uint8)
 mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
 step +=1
 printProgressBar(step, total_steps, prefix = 'Progress:', suffix = 'Complete', length = 50)

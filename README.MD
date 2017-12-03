@@ -6,6 +6,11 @@
         1. [Requirements](#requirements)
         2. [Parameters](#parameters)
     2. [Tecnical Explanation](#tecnical-explanation)
+        1. [Sampling Top Left Corner](#sampling-top-left-corner)
+        2. [Color Thresholding](#color-thresholding)
+        3. [Morphological Transformation](#morphological-transformation)
+        4. [Finding Contours](#finding-contours)
+        5. [Bounding Rectangle](#bounding-rectangle)
     3. [Results](#results)
 2. [PixelArtIt](#what-is-pixelartit)
     1. [What is pixel art?](#what-is-pixel-art)
@@ -44,6 +49,35 @@ This script was made for the course of Computer Vision @ DCC.FCUP by João Estre
 | o         | output              | no       | output folder for objects images                        |
 
 ## Tecnical Explanation
+
+### Sampling Top Left Corner
+
+To have a clue about the background GetMeThoseObjects script extracts the hue values in the top left corner.
+With the range of hues it can start working on getting a mask.
+
+### Color Thresholding
+
+The values obtained in the sampling of the top left corner are used in this stage to make a mask of the pixels in those hue ranges.
+That mask represents the background and should be inverted to represent the objects.
+
+### Morphological Transformation
+
+With the mask done there are some tecniques usefull to remove the noise and make it easier to find contours later.
+The morphological Transformation used is called Close and its the combination of dilatation followed by erosion.
+The erosion is similar to natural erosion and is used to erode the bondaries of the foreground object.
+The dilatation is the opposite of erosion and is used to increase the bondaries of the foreground object.
+With these two combined is possible to close small holes in the foreground object.
+
+The kernel used for these transformations is 1x1 as it is only used to make it easier to find the contours in the next step.
+
+### Finding Contours
+
+Finding contours is crucial for GetMeThoseObjects script as it enables to enumerate the diferent objects in a image.
+With these contours it knows how to mask each object individually.
+
+### Bounding Rectangle
+
+To get each object in its separated image file, it is created a Bounding Rectangle for each object and then applied to the original image together with the mask made with the contours.
 
 ## Results
 
