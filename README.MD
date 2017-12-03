@@ -68,7 +68,7 @@ The erosion is similar to natural erosion and is used to erode the bondaries of 
 The dilatation is the opposite of erosion and is used to increase the bondaries of the foreground object.
 With these two combined is possible to close small holes in the foreground object.
 
-The kernel used for these transformations is 1x1 as it is only used to make it easier to find the contours in the next step.
+The kernel used for these transformations is 3x3 as it is only used to make it easier to find the contours in the next step.
 
 ### Finding Contours
 
